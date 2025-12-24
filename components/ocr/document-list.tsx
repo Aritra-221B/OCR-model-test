@@ -6,16 +6,13 @@ import {
     Clock,
     Eye,
     Trash2,
-    MoreVertical,
-    DollarSign,
-    FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type ProcessingStatus = "success" | "failed" | "processing";
 type AcceptanceStatus = "accepted" | "rejected" | "pending";
 
-interface Document {
+export interface Document {
     id: string;
     fileName: string;
     vendor: string;
@@ -27,61 +24,15 @@ interface Document {
     acceptanceStatus: AcceptanceStatus;
 }
 
-const mockDocuments: Document[] = [
-    {
-        id: "1",
-        fileName: "receipt_home_depot_jan.jpg",
-        vendor: "Home Depot",
-        amount: "$245.67",
-        category: "Maintenance",
-        confidence: 95,
-        uploadDate: "18/01/2024",
-        status: "success",
-        acceptanceStatus: "accepted",
-    },
-    {
-        id: "2",
-        fileName: "utility_bill_december.pdf",
-        vendor: "Pacific Gas & Electric",
-        amount: "$187.34",
-        category: "Utilities",
-        confidence: 98,
-        uploadDate: "15/01/2024",
-        status: "success",
-        acceptanceStatus: "pending",
-    },
-    {
-        id: "3",
-        fileName: "repair_invoice.jpg",
-        vendor: "-",
-        amount: "-",
-        category: "-",
-        confidence: 0,
-        uploadDate: "20/01/2024",
-        status: "processing",
-        acceptanceStatus: "pending",
-    },
-    {
-        id: "4",
-        fileName: "insurance_premium.pdf",
-        vendor: "-",
-        amount: "-",
-        category: "-",
-        confidence: 0,
-        uploadDate: "12/01/2024",
-        status: "failed",
-        acceptanceStatus: "rejected",
-    },
-];
+interface DocumentListProps {
+    documents: Document[];
+}
 
-export function DocumentList() {
+export function DocumentList({ documents }: DocumentListProps) {
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
             <div className="p-6 border-b border-gray-200 flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-gray-900">History</h2>
-                <div className="flex gap-2">
-                    {/* Placeholder for filters or search if needed */}
-                </div>
             </div>
 
             <div className="overflow-x-auto">
@@ -100,7 +51,7 @@ export function DocumentList() {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                        {mockDocuments.map((doc) => (
+                        {documents.map((doc) => (
                             <tr key={doc.id} className="hover:bg-gray-50 transition-colors">
                                 <td className="px-6 py-4">
                                     {doc.status === "success" && (
